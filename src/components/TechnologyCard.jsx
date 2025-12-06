@@ -1,6 +1,6 @@
 import './TechnologyCard.css';
 
-function TechnologyCard({ title, description, status }) {
+function TechnologyCard({ title, description, status, onUpdateStatus }) {
   let statusText = '';
   let className = 'technology-card';
 
@@ -16,7 +16,7 @@ function TechnologyCard({ title, description, status }) {
   }
 
   return (
-    <div className={className}>
+    <div className={className} onClick={onUpdateStatus}>
       <h3>{title}</h3>
       <p>{description}</p>
       <p>Статус: {statusText}</p>
