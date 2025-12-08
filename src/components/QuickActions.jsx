@@ -1,4 +1,3 @@
-// src/components/QuickActions.jsx
 import './QuickActions.css';
 
 function QuickActions({ setTechnologies }) {

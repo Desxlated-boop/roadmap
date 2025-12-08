@@ -15,7 +15,11 @@ function TechnologyCard({ id, title, description, status, notes, onStatusChange,
         <h4>Мои заметки:</h4>
         <textarea
           value={notes}
-          onChange={(e) => onNotesChange(id, e.target.value)}
+          onChange={(e) => {
+            e.stopPropagation();
+            onNotesChange(e.target.value);
+          }}
+          onClick={(e) => e.stopPropagation()}
           placeholder="Записывайте заметки здесь..."
           rows="4"
         />
