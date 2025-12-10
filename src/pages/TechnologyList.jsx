@@ -43,7 +43,6 @@ function TechnologyList() {
               onStatusChange={() => updateStatus(tech.id)}
               onNotesChange={(text) => updateNotes(tech.id, text)}
             />
-            <Link to={`/technology/${tech.id}`}>Подробно</Link>
           </div>
         ))}
       </div>
