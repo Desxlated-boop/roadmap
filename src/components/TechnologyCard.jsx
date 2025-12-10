@@ -24,6 +24,7 @@ function TechnologyCard({ id, title, description, status, notes, onStatusChange,
           placeholder="Записывайте заметки здесь..."
           rows="4"
         />
+        <Link to={`/edit/${id}`}>Редактировать заметки</Link>
       </div>
       <Link to={`/technology/${id}`} style={{ display: 'block', marginTop: '10px' }}>
         Подробно →

@@ -1,16 +1,16 @@
 import { useParams, Link } from 'react-router-dom';
 import useTechnologies from '../hooks/useTechnologies.jsx';
 
-export default function TechnologyDetail() {
+export default function TechnologyEdit() {
   const { id } = useParams();
-  const { technologies, updateStatus, updateNotes } = useTechnologies();
+  const { technologies, updateNotes } = useTechnologies();
   const tech = technologies.find(t => t.id === Number(id));
 
   if (!tech) return <div style={{padding: '40px', color: 'white'}}>Технология не найдена</div>;
 
   return (
     <div style={{ padding: '30px', maxWidth: '800px', margin: '0 auto' }}>
-      {/* КНОПКА НАЗАД — КРАСИВАЯ И ВИДНАЯ */}
+      {/* КНОПКА НАЗАД — КРАСИВАЯ И ВИДИМАЯ */}
       <Link 
         to="/" 
         style={{
@@ -27,15 +27,14 @@ export default function TechnologyDetail() {
         ← Назад к списку
       </Link>
 
-      <h2 style={{ color: 'white' }}>{tech.title}</h2>
-      <p style={{ color: '#aaa' }}><strong>Описание:</strong> {tech.description}</p>
-      <p style={{ color: '#aaa' }}><strong>Статус:</strong> {tech.status}</p>
+      <h2 style={{ color: 'white' }}>Редактирование: {tech.title}</h2>
+      <p style={{ color: '#aaa' }}>{tech.description}</p>
 
       <h3 style={{ color: 'white', marginTop: '30px' }}>Заметки</h3>
       <textarea
         value={tech.notes}
         onChange={(e) => updateNotes(tech.id, e.target.value)}
-        rows="10"
+        rows="12"
         style={{
           width: '100%',
           padding: '12px',
@@ -46,22 +45,6 @@ export default function TechnologyDetail() {
           fontSize: '16px'
         }}
       />
-
-      <br /><br />
-      <button 
-        onClick={() => updateStatus(tech.id)}
-        style={{
-          padding: '12px 24px',
-          backgroundColor: '#28a745',
-          color: 'white',
-          border: 'none',
-          borderRadius: '6px',
-          fontSize: '16px',
-          cursor: 'pointer'
-        }}
-      >
-        Следующий статус
-      </button>
     </div>
   );
 }
