@@ -1,30 +1,18 @@
+// src/components/ProgressHeader.jsx
 import './ProgressHeader.css';
 
-function ProgressHeader({ technologies }) {
-  const total = technologies.length;
-  const completed = technologies.filter(tech => tech.status === 'completed').length;
-  const inProgress = technologies.filter(tech => tech.status === 'in-progress').length;
-  const notStarted = technologies.filter(tech => tech.status === 'not-started').length;
-  const percentage = total > 0 ? (completed / total) * 100 : 0;
-
+function ProgressHeader({ progress }) {
   let progressClass = 'progress';
-  if (percentage === 100) {
-    progressClass += ' full';
-  } else if (percentage > 0) {
-    progressClass += ' partial';
-  }
+  if (progress === 100) progressClass += ' full';
+  else if (progress > 0) progressClass += ' partial';
 
   return (
     <div className="progress-header">
       <h2>Прогресс изучения</h2>
-      <p>Всего технологий: {total}</p>
-      <p>Завершено: {completed}</p>
-      <p>В процессе: {inProgress}</p>
-      <p>Не начато: {notStarted}</p>
       <div className="progress-bar">
-        <div className={progressClass} style={{ width: `${percentage}%` }}></div>
+        <div className={progressClass} style={{ width: `${progress}%` }}></div>
       </div>
-      <p>{percentage.toFixed(2)}% завершено</p>
+      <p>{progress}% завершено</p>
     </div>
   );
 }

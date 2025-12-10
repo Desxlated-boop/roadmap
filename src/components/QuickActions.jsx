@@ -1,26 +1,7 @@
+// src/components/QuickActions.jsx
 import './QuickActions.css';
 
-function QuickActions({ setTechnologies }) {
-  const markAllCompleted = () => {
-    setTechnologies(prev => prev.map(tech => ({ ...tech, status: 'completed' })));
-  };
-
-  const resetAll = () => {
-    setTechnologies(prev => prev.map(tech => ({ ...tech, status: 'not-started' })));
-  };
-
-  const randomNext = () => {
-    setTechnologies(prev => {
-      const notStarted = prev.filter(tech => tech.status === 'not-started');
-      if (notStarted.length === 0) return prev; // ничего не делаем, если нет не начатых
-
-      const randomTech = notStarted[Math.floor(Math.random() * notStarted.length)];
-      return prev.map(tech =>
-        tech.id === randomTech.id ? { ...tech, status: 'in-progress' } : tech
-      );
-    });
-  };
-
+function QuickActions({ markAllCompleted, resetAll, randomNext }) {
   return (
     <div className="quick-actions">
       <button onClick={markAllCompleted}>Отметить все как выполненные</button>
