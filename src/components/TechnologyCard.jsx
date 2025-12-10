@@ -1,4 +1,5 @@
 import './TechnologyCard.css';
+import { Link } from 'react-router-dom';
 
 function TechnologyCard({ id, title, description, status, notes, onStatusChange, onNotesChange }) {
   const statusText = status === 'completed' ? 'Завершено' : status === 'in-progress' ? 'В процессе' : 'Не начато';
@@ -24,6 +25,9 @@ function TechnologyCard({ id, title, description, status, notes, onStatusChange,
           rows="4"
         />
       </div>
+      <Link to={`/technology/${id}`} style={{ display: 'block', marginTop: '10px' }}>
+        Подробно →
+      </Link>
     </div>
   );
 }
