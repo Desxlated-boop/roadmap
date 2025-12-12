@@ -9,18 +9,49 @@ function TechnologyList() {
     technologies,
     filter,
     setFilter,
+    search,
+    setSearch,
     updateStatus,
     updateNotes,
     markAllCompleted,
     resetAll,
     randomNext,
-    progress
+    progress,
+    loading,
+    error,
+    loadOneTechnology
   } = useTechnologies();
 
   return (
     <div>
       <h1>Трекер изучения технологий</h1>
       <ProgressHeader progress={progress} />
+      <div style={{ textAlign: 'center', margin: '30px 0' }}>
+        <button
+          onClick={loadOneTechnology}
+          disabled={loading}
+          style={{
+            padding: '14px 32px',
+            backgroundColor: loading ? '#666' : '#28a745',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '16px',
+            cursor: loading ? 'not-allowed' : 'pointer'
+          }}
+        >
+          {loading ? 'Загрузка...' : 'Загрузить одну технологию с сервера'}
+        </button>
+
+        {error && (
+          <div style={{ marginTop: '15px', color: '#ff6b6b' }}>
+            <p>{error}</p>
+            <button onClick={loadOneTechnology} style={{ background: '#0066cc', color: 'white', padding: '8px 16px', border: 'none', borderRadius: '6px' }}>
+              Попробовать снова
+            </button>
+          </div>
+        )}
+      </div>
 
       <div className="filters">
         <button onClick={() => setFilter('all')}>Все</button>

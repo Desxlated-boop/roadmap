@@ -1,4 +1,3 @@
-// src/hooks/useTechnologies.jsx
 import useLocalStorage from './useLocalStorage.jsx';
 import { useState } from 'react';
 
@@ -11,11 +10,42 @@ const defaultData = [
 ];
 
 export default function useTechnologies() {
-  const [technologies, setTechnologies] = useLocalStorage('techTrackerData', defaultData);
+  const [allTechnologies, setAllTechnologies] = useLocalStorage('techTrackerData', defaultData);
   const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const loadOneTechnology = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const res = await fetch('https://api.github.com/repositories?since=' + Math.floor(Math.random() * 500));
+      if (!res.ok) throw new Error('GitHub API не отвечает');
+
+      const repos = await res.json();
+      const randomRepo = repos[Math.floor(Math.random() * repos.length)];
+
+      const newTech = {
+        id: Date.now(),
+        title: randomRepo.name || 'Unknown Tech',
+        description: randomRepo.description || 'Popular open-source project on GitHub',
+        status: 'not-started',
+        notes: ''
+      };
+
+      setAllTechnologies(prev => [...prev, newTech]);
+
+    } catch (err) {
+      setError('Ошибка загрузки: ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const updateStatus = (id) => {
-    setTechnologies(prev => prev.map(t =>
+    setAllTechnologies(prev => prev.map(t =>
       t.id === id
         ? { ...t, status: t.status === 'not-started' ? 'in-progress' : t.status === 'in-progress' ? 'completed' : 'not-started' }
         : t
@@ -23,33 +53,41 @@ export default function useTechnologies() {
   };
 
   const updateNotes = (id, text) => {
-    setTechnologies(prev => prev.map(t => t.id === id ? { ...t, notes: text } : t));
+    setAllTechnologies(prev => prev.map(t => t.id === id ? { ...t, notes: text } : t));
   };
 
-  const markAllCompleted = () => setTechnologies(prev => prev.map(t => ({ ...t, status: 'completed' })));
-  const resetAll = () => setTechnologies(prev => prev.map(t => ({ ...t, status: 'not-started' })));
-
-  const filtered = technologies.filter(t => filter === 'all' || t.status === filter);
-  const progress = technologies.length ? Math.round(technologies.filter(t => t.status === 'completed').length / technologies.length * 100) : 0;
+  const markAllCompleted = () => setAllTechnologies(prev => prev.map(t => ({ ...t, status: 'completed' })));
+  const resetAll = () => setAllTechnologies(prev => prev.map(t => ({ ...t, status: 'not-started', notes: '' })));
 
   const randomNext = () => {
-      setTechnologies(prev => {
-          const notStarted = prev.filter(t => t.status === 'not-started');
-          if (notStarted.length === 0) return prev;
-          const random = notStarted[Math.floor(Math.random() * notStarted.length)];
-          return prev.map(t => t.id === random.id ? { ...t, status: 'in-progress' } : t);
-      });
+    setAllTechnologies(prev => {
+      const notStarted = prev.filter(t => t.status === 'not-started');
+      if (notStarted.length === 0) return prev;
+      const random = notStarted[Math.floor(Math.random() * notStarted.length)];
+      return prev.map(t => t.id === random.id ? { ...t, status: 'in-progress' } : t);
+    });
   };
+
+  const filtered = allTechnologies
+    .filter(t => filter === 'all' || t.status === filter)
+    .filter(t => t.title.toLowerCase().includes(search.toLowerCase()));
+
+  const progress = allTechnologies.length
+    ? Math.round(allTechnologies.filter(t => t.status === 'completed').length / allTechnologies.length * 100)
+    : 0;
 
   return {
     technologies: filtered,
-    allTechnologies: technologies,
     filter, setFilter,
+    search, setSearch,
     updateStatus,
     updateNotes,
     markAllCompleted,
     resetAll,
     randomNext,
-    progress
+    progress,
+    loading,
+    error,
+    loadOneTechnology
   };
 }

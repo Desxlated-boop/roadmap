@@ -10,7 +10,6 @@ export default function TechnologyEdit() {
 
   return (
     <div style={{ padding: '30px', maxWidth: '800px', margin: '0 auto' }}>
-      {/* КНОПКА НАЗАД — КРАСИВАЯ И ВИДИМАЯ */}
       <Link 
         to="/" 
         style={{
