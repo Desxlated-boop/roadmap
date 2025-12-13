@@ -2,11 +2,11 @@ import useLocalStorage from './useLocalStorage.jsx';
 import { useState } from 'react';
 
 const defaultData = [
-  { id: 1, title: 'React Components', description: 'Изучение базовых компонентов', status: 'not-started', notes: '' },
-  { id: 2, title: 'JSX Syntax', description: 'Освоение синтаксиса JSX', status: 'not-started', notes: '' },
-  { id: 3, title: 'State Management', description: 'Работа с состоянием компонентов', status: 'not-started', notes: '' },
-  { id: 4, title: 'Props and Lifting State', description: 'Передача данных между компонентами', status: 'not-started', notes: '' },
-  { id: 5, title: 'Hooks Basics', description: 'Введение в хуки React', status: 'not-started', notes: '' }
+  { id: 1, title: 'React Components', description: 'Изучение базовых компонентов', status: 'not-started', notes: '', startDate: null, endDate: null },
+  { id: 2, title: 'JSX Syntax', description: 'Освоение синтаксиса JSX', status: 'not-started', notes: '', startDate: null, endDate: null },
+  { id: 3, title: 'State Management', description: 'Работа с состоянием компонентов', status: 'not-started', notes: '', startDate: null, endDate: null },
+  { id: 4, title: 'Props and Lifting State', description: 'Передача данных между компонентами', status: 'not-started', notes: '', startDate: null, endDate: null },
+  { id: 5, title: 'Hooks Basics', description: 'Введение в хуки React', status: 'not-started', notes: '', startDate: null, endDate: null }
 ];
 
 export default function useTechnologies() {
@@ -32,7 +32,9 @@ export default function useTechnologies() {
         title: randomRepo.name || 'Unknown Tech',
         description: randomRepo.description || 'Popular open-source project on GitHub',
         status: 'not-started',
-        notes: ''
+        notes: '',
+        startDate: null, 
+        endDate: null
       };
 
       setAllTechnologies(prev => [...prev, newTech]);
@@ -76,6 +78,25 @@ export default function useTechnologies() {
     ? Math.round(allTechnologies.filter(t => t.status === 'completed').length / allTechnologies.length * 100)
     : 0;
 
+  const addTechnology = (newTech) => {
+    setAllTechnologies(prev => [...prev, { ...newTech, id: Date.now(), status: 'not-started', notes: '' }]);
+  };
+
+  const updateTechnology = (updatedTech) => {
+    setAllTechnologies(prev => prev.map(t => t.id === updatedTech.id ? updatedTech : t));
+  };
+
+  const deleteTechnology = (id) => {
+    setAllTechnologies(prev => prev.filter(t => t.id !== id));
+  };
+
+  // ФУНКЦИЯ УДАЛЕНИЯ СРОКОВ - ДОБАВЛЯЕМ
+  const clearDeadline = (id) => {
+    setAllTechnologies(prev => prev.map(t =>
+      t.id === id ? { ...t, startDate: null, endDate: null } : t
+    ));
+  };
+
   return {
     technologies: filtered,
     filter, setFilter,
@@ -88,6 +109,11 @@ export default function useTechnologies() {
     progress,
     loading,
     error,
-    loadOneTechnology
+    loadOneTechnology,
+    addTechnology,
+    updateTechnology,
+    deleteTechnology,
+    clearDeadline, // ← ДОБАВЛЯЕМ В ВОЗВРАЩАЕМЫЕ ЗНАЧЕНИЯ
+    setAllTechnologies: setAllTechnologies,
   };
 }
