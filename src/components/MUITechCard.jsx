@@ -7,6 +7,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './Animations.css';
 
 const statusConfig = {
   'not-started': { color: 'error', label: 'Не начато' },
@@ -52,8 +53,11 @@ export default function MUITechCard({
     <Card sx={{ 
       mb: 2, 
       bgcolor: 'background.paper',
-      border: deadlineInfo?.color === 'error' ? '1px solid #f44336' : 'none'
-    }}>
+      border: deadlineInfo?.color === 'error' ? '1px solid #f44336' : 'none',
+      animation: 'fadeIn 0.5s ease'
+    }}
+    className="tech-card-hover"
+    >
       <CardContent>
         <Box display="flex" justifyContent="space-between" alignItems="flex-start">
           <Checkbox
@@ -74,26 +78,39 @@ export default function MUITechCard({
             mx: 1.5,
             alignSelf: 'flex-start'
           }}>
-            <Box display="flex" alignItems="center" gap={1} mb={1}>
-              <Typography 
-                variant="h5" 
-                component="h3" 
-                sx={{ 
+            <Box
+              display="flex"
+              alignItems="flex-start"  // ← Изменено с center на flex-start
+              gap={1}
+              mb={1}
+              sx={{ minHeight: '40px' }}  // ← Добавлено
+            >
+              <Typography
+                variant="h5"
+                component="h3"
+                sx={{
                   wordBreak: 'break-word',
                   overflowWrap: 'break-word',
-                  minHeight: '1.5em',
-                  flex: 1
+                  flex: 1,
+                  lineHeight: 1.2,  // ← Добавлено
+                  alignSelf: 'center'  // ← Добавлено
                 }}
               >
                 {tech.title}
               </Typography>
-              
+
               {onSetDeadline && (
                 <Tooltip title="Установить сроки">
-                  <IconButton 
-                    size="small" 
+                  <IconButton
+                    size="small"
                     onClick={() => onSetDeadline(tech)}
                     aria-label={`Установить сроки для ${tech.title}`}
+                    sx={{
+                      alignSelf: 'flex-start',  // ← Добавлено
+                      mt: 0.5, // ← Добавлено небольшое смещение
+                      position: 'relative',  // ← Добавь это
+                      top: '4px'
+                    }}
                   >
                     <CalendarTodayIcon fontSize="small" />
                   </IconButton>
@@ -110,6 +127,7 @@ export default function MUITechCard({
                 label={statusConfig[tech.status].label}
                 color={statusConfig[tech.status].color}
                 size="small"
+                className="status-change"
               />
               
               {deadlineInfo && (

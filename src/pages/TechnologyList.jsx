@@ -12,6 +12,11 @@ import {
   TextField, InputAdornment, Paper, useTheme
 } from '@mui/material';
 import { LightMode, DarkMode, Download, Upload, Add, Search as SearchIcon, Close as CloseIcon } from '@mui/icons-material';
+import Counter from '../components/Counter';
+import WindowSizeTracker from '../components/WindowSizeTracker';
+import UserProfile from '../components/UserProfile';
+import ColorPicker from '../components/ColorPicker';
+import ContactForm from '../components/ContactForm';
 
 export default function TechnologyList() {
   const theme = useTheme();
@@ -136,7 +141,7 @@ export default function TechnologyList() {
         </Box>
       </Box>
 
-      <ProgressHeader progress={progress} />
+      <ProgressHeader progress={progress} technologies={technologies} />
       
       <TextField
         label="Поиск технологий"

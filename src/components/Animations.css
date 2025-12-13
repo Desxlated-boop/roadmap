@@ -1,0 +1,130 @@
+/* src/components/Animations.css */
+
+/* Анимации для карточек технологий */
+.tech-card-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.tech-card-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.tech-card-exit {
+  opacity: 1;
+}
+
+.tech-card-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* Ховер-эффекты */
+.tech-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tech-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Анимации статусов */
+.status-not-started {
+  border-left: 5px solid #e53935;
+  transition: border-color 0.3s ease;
+}
+
+.status-in-progress {
+  border-left: 5px solid #00acc1;
+  transition: border-color 0.3s ease;
+}
+
+.status-completed {
+  border-left: 5px solid #16c60d;
+  transition: border-color 0.3s ease;
+}
+
+/* Плавное изменение цвета статуса */
+.status-change {
+  transition: all 0.5s ease;
+}
+
+/* Анимация загрузки */
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Анимация появления */
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Анимация слайда */
+.slide-up {
+  animation: slideUp 0.4s ease forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Анимация прогресс-бара */
+.progress-grow {
+  transition: width 0.8s ease-in-out;
+}
+
+/* Анимация кнопок */
+.button-scale {
+  transition: transform 0.2s ease;
+}
+
+.button-scale:hover {
+  transform: scale(1.05);
+}
+
+.button-scale:active {
+  transform: scale(0.95);
+}
+
+/* Анимация формы */
+.form-shake {
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
