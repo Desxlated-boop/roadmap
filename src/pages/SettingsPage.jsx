@@ -7,8 +7,6 @@ import {
   Switch,
   FormControlLabel,
   Button,
-  TextField,
-  Divider,
   Alert,
   Slider
 } from '@mui/material';
@@ -100,10 +98,10 @@ export default function SettingsPage() {
       
       <Paper sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
-          Примеры компонентов (из практик)
+          Примеры компонентов
         </Typography>
         <Typography variant="body2" color="text.secondary" paragraph>
-          Демонстрация компонентов из практических занятий:
+          Демонстрация компонентов:
         </Typography>
         
         <Counter />

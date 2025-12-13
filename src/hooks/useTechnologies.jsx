@@ -113,7 +113,7 @@ export default function useTechnologies() {
     addTechnology,
     updateTechnology,
     deleteTechnology,
-    clearDeadline, // ← ДОБАВЛЯЕМ В ВОЗВРАЩАЕМЫЕ ЗНАЧЕНИЯ
+    clearDeadline,
     setAllTechnologies: setAllTechnologies,
   };
 }

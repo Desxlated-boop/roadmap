@@ -1,6 +1,3 @@
-/* src/components/Animations.css */
-
-/* Анимации для карточек технологий */
 .tech-card-enter {
   opacity: 0;
   transform: translateY(20px);

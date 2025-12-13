@@ -1,11 +1,9 @@
-// src/components/ProgressHeader.jsx
 import { Box, Typography, LinearProgress, Grid, Chip } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 function ProgressHeader({ progress, technologies = [] }) {
   const theme = useTheme();
   
-  // Считаем статистику ИЗ ПЕРЕДАННЫХ ТЕХНОЛОГИЙ
   const stats = {
     total: technologies.length,
     notStarted: technologies.filter(t => t.status === 'not-started').length,
@@ -13,7 +11,6 @@ function ProgressHeader({ progress, technologies = [] }) {
     completed: technologies.filter(t => t.status === 'completed').length,
   };
 
-  // Пересчитываем процент на основе переданных технологий
   const calculatedProgress = stats.total > 0 
     ? Math.round((stats.completed / stats.total) * 100) 
     : 0;
@@ -122,9 +119,9 @@ function ProgressHeader({ progress, technologies = [] }) {
       </Grid>
       
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 2, textAlign: 'center' }}>
-        {calculatedProgress === 100 ? '🎉 Все технологии изучены!' : 
-         calculatedProgress >= 50 ? '🚀 Хороший прогресс!' : 
-         '💪 Продолжаем изучать!'}
+        {calculatedProgress === 100 ? 'Все технологии изучены!' : 
+         calculatedProgress >= 50 ? 'Неплохо, неплохо' : 
+         'Изучаем дальше'}
       </Typography>
     </Box>
   );

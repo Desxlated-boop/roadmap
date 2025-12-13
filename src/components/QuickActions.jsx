@@ -1,4 +1,3 @@
-// src/components/QuickActions.jsx
 import { ButtonGroup, Button, Tooltip, Box } from '@mui/material';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';

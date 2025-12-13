@@ -83,7 +83,7 @@ export default function ContactForm() {
   return (
     <Paper sx={{ p: 3, mb: 3 }}>
       <Typography variant="h6" gutterBottom>
-        Форма обратной связи (валидация в useEffect)
+        Форма обратной связи
       </Typography>
       
       {isSubmitted && (

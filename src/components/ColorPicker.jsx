@@ -67,10 +67,10 @@ export default function ColorPicker() {
   return (
     <Paper sx={{ p: 3, mb: 3 }}>
       <Typography variant="h6" gutterBottom>
-        Выбор цвета (Lifting State Up пример)
+        Выбор цвета
       </Typography>
       <Typography variant="body2" color="text.secondary" paragraph>
-        Состояние хранится в родительском компоненте и передаётся детям через props
+        Состояние хранится в родительском компоненте и передаётся дочерним через props
       </Typography>
       
       <ColorDisplay color={selectedColor} />

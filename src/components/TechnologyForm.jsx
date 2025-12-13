@@ -1,4 +1,3 @@
-// src/components/TechnologyForm.jsx
 import { useState, useEffect } from 'react';
 import {
   Dialog, DialogTitle, DialogContent, DialogActions,

@@ -5,10 +5,8 @@ import App from './App.jsx'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
-// Получаем сохраненную тему или используем тёмную по умолчанию
 const savedTheme = localStorage.getItem('theme') || 'dark'
 
-// Создаём светлую и тёмную темы
 const getDesignTokens = (mode) => ({
   palette: {
     mode,

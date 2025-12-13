@@ -5,7 +5,6 @@ import useTechnologies from '../hooks/useTechnologies.jsx';
 export default function StatsPage() {
   const { technologies } = useTechnologies();
   
-  // Подсчёт статистики
   const statusCounts = technologies.reduce((acc, tech) => {
     acc[tech.status] = (acc[tech.status] || 0) + 1;
     return acc;

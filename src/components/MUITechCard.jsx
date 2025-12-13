@@ -1,4 +1,3 @@
-// src/components/MUITechCard.jsx
 import {
   Card, CardContent, Typography, Chip, IconButton, Menu, MenuItem,
   LinearProgress, Box, Checkbox, Button, Tooltip
@@ -80,10 +79,10 @@ export default function MUITechCard({
           }}>
             <Box
               display="flex"
-              alignItems="flex-start"  // ← Изменено с center на flex-start
+              alignItems="flex-start"
               gap={1}
               mb={1}
-              sx={{ minHeight: '40px' }}  // ← Добавлено
+              sx={{ minHeight: '40px' }}
             >
               <Typography
                 variant="h5"
@@ -92,8 +91,8 @@ export default function MUITechCard({
                   wordBreak: 'break-word',
                   overflowWrap: 'break-word',
                   flex: 1,
-                  lineHeight: 1.2,  // ← Добавлено
-                  alignSelf: 'center'  // ← Добавлено
+                  lineHeight: 1.2,
+                  alignSelf: 'center'
                 }}
               >
                 {tech.title}
@@ -106,9 +105,9 @@ export default function MUITechCard({
                     onClick={() => onSetDeadline(tech)}
                     aria-label={`Установить сроки для ${tech.title}`}
                     sx={{
-                      alignSelf: 'flex-start',  // ← Добавлено
-                      mt: 0.5, // ← Добавлено небольшое смещение
-                      position: 'relative',  // ← Добавь это
+                      alignSelf: 'flex-start',
+                      mt: 0.5,
+                      position: 'relative',
                       top: '4px'
                     }}
                   >
