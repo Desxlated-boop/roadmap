@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navigation from './components/Navigation';
 import TechnologyList from './pages/TechnologyList';
@@ -7,10 +7,10 @@ import TechnologyEdit from './pages/TechnologyEdit';
 import StatsPage from './pages/StatsPage';
 import SettingsPage from './pages/SettingsPage';
 
-function App() {
+function App({ toggleTheme, themeMode }) {
   return (
     <Router>
-      <Navigation />
+      <Navigation toggleTheme={toggleTheme} themeMode={themeMode} />
       <div className="app">
         <Routes>
           <Route path="/" element={<TechnologyList />} />

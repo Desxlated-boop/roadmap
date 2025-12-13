@@ -7,10 +7,10 @@ import ProgressHeader from '../components/ProgressHeader';
 import QuickActions from '../components/QuickActions';
 import {
   Container, Typography, Button, ButtonGroup, Box, Fab, Snackbar, Alert,
-  IconButton, Switch, FormControlLabel, Tooltip, CircularProgress,
+  IconButton, Tooltip, CircularProgress,
   TextField, InputAdornment, Paper, useTheme
 } from '@mui/material';
-import { LightMode, DarkMode, Download, Upload, Add, Search as SearchIcon, Close as CloseIcon } from '@mui/icons-material';
+import { Download, Upload, Add, Search as SearchIcon, Close as CloseIcon } from '@mui/icons-material';
 
 export default function TechnologyList() {
   const theme = useTheme();
@@ -105,32 +105,6 @@ export default function TechnologyList() {
               <Upload />
               <input type="file" hidden accept=".json" onChange={handleImport} />
             </IconButton>
-          </Tooltip>
-          
-          {/* Переключатель темы */}
-          <Tooltip title={themeMode === 'dark' ? 'Переключить на светлую тему' : 'Переключить на тёмную тему'}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={themeMode === 'light'}
-                  onChange={toggleTheme}
-                  color="default"
-                  inputProps={{ 
-                    'aria-label': 'Переключить тему',
-                    'role': 'switch'
-                  }}
-                />
-              }
-              label={
-                themeMode === 'light' ? (
-                  <LightMode sx={{ color: 'warning.main' }} />
-                ) : (
-                  <DarkMode sx={{ color: 'primary.main' }} />
-                )
-              }
-              sx={{ m: 0 }}
-              aria-label={`Текущая тема: ${themeMode === 'dark' ? 'тёмная' : 'светлая'}`}
-            />
           </Tooltip>
         </Box>
       </Box>

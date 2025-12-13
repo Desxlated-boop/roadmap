@@ -1,11 +1,13 @@
-import { AppBar, Toolbar, Button, Box, Typography, Container } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, Typography, Container, IconButton, Tooltip } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import ScienceIcon from '@mui/icons-material/Science';
 import SettingsIcon from '@mui/icons-material/Settings';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import ListAltIcon from '@mui/icons-material/ListAlt';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
-export default function Navigation() {
+export default function Navigation({ toggleTheme, themeMode }) {
   const location = useLocation();
   
   const navItems = [
@@ -25,7 +27,7 @@ export default function Navigation() {
             </Typography>
           </Box>
           
-          <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             {navItems.map((item) => (
               <Button
                 key={item.path}
@@ -44,6 +46,16 @@ export default function Navigation() {
                 {item.label}
               </Button>
             ))}
+            
+            <Tooltip title={themeMode === 'dark' ? 'Светлая тема' : 'Тёмная тема'}>
+              <IconButton
+                onClick={toggleTheme}
+                sx={{ color: 'white', ml: 1 }}
+                aria-label="Сменить тему"
+              >
+                {themeMode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+              </IconButton>
+            </Tooltip>
           </Box>
         </Toolbar>
       </Container>

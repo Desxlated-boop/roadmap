@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Container,
   Typography,
@@ -7,8 +7,9 @@ import {
   Switch,
   FormControlLabel,
   Button,
+  Slider,
   Alert,
-  Slider
+  Snackbar
 } from '@mui/material';
 import Counter from '../components/Counter';
 import WindowSizeTracker from '../components/WindowSizeTracker';
@@ -18,32 +19,51 @@ import ContactForm from '../components/ContactForm';
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState({
-    darkMode: localStorage.getItem('theme') === 'dark',
     notifications: true,
     autoSave: true,
     itemsPerPage: 10,
   });
+  
+  const [snackbar, setSnackbar] = useState({ open: false, message: '' });
   const [resetConfirm, setResetConfirm] = useState(false);
 
   const handleSettingChange = (key, value) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
-    
-    if (key === 'darkMode') {
-      localStorage.setItem('theme', value ? 'dark' : 'light');
-      window.location.reload();
-    }
+    const newSettings = { ...settings, [key]: value };
+    setSettings(newSettings);
+    localStorage.setItem('appSettings', JSON.stringify(newSettings));
+    setSnackbar({ open: true, message: 'Настройка сохранена' });
   };
 
+  useEffect(() => {
+    const savedSettings = localStorage.getItem('appSettings');
+    if (savedSettings) {
+      try {
+        setSettings(JSON.parse(savedSettings));
+      } catch (e) {
+        console.error('Ошибка загрузки настроек:', e);
+      }
+    }
+  }, []);
+
   const handleReset = () => {
-    localStorage.clear();
+    localStorage.removeItem('appSettings');
+    setSettings({
+      notifications: true,
+      autoSave: true,
+      itemsPerPage: 10,
+    });
     setResetConfirm(false);
-    window.location.reload();
+    setSnackbar({ open: true, message: 'Настройки сброшены' });
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Typography variant="h4" gutterBottom sx={{ color: 'text.primary' }}>
-        ⚙️ Настройки приложения
+        Настройки приложения
       </Typography>
       
       <Paper sx={{ p: 3, mb: 3 }}>
@@ -55,21 +75,11 @@ export default function SettingsPage() {
           <FormControlLabel
             control={
               <Switch
-                checked={settings.darkMode}
-                onChange={(e) => handleSettingChange('darkMode', e.target.checked)}
-              />
-            }
-            label="Тёмная тема"
-          />
-          
-          <FormControlLabel
-            control={
-              <Switch
                 checked={settings.notifications}
                 onChange={(e) => handleSettingChange('notifications', e.target.checked)}
               />
             }
-            label="Уведомления"
+            label={`Уведомления: ${settings.notifications ? 'ВКЛ' : 'ВЫКЛ'}`}
           />
           
           <FormControlLabel
@@ -79,11 +89,13 @@ export default function SettingsPage() {
                 onChange={(e) => handleSettingChange('autoSave', e.target.checked)}
               />
             }
-            label="Автосохранение"
+            label={`Автосохранение: ${settings.autoSave ? 'ВКЛ' : 'ВЫКЛ'}`}
           />
           
           <Box>
-            <Typography gutterBottom>Элементов на странице: {settings.itemsPerPage}</Typography>
+            <Typography gutterBottom>
+              Элементов на странице: {settings.itemsPerPage}
+            </Typography>
             <Slider
               value={settings.itemsPerPage}
               onChange={(_, value) => handleSettingChange('itemsPerPage', value)}
@@ -91,6 +103,7 @@ export default function SettingsPage() {
               max={50}
               step={5}
               marks
+              valueLabelDisplay="auto"
             />
           </Box>
         </Box>
@@ -118,7 +131,7 @@ export default function SettingsPage() {
         
         {resetConfirm ? (
           <Alert severity="warning" sx={{ mb: 2 }}>
-            Вы уверены? Это удалит все сохранённые данные.
+            Вы уверены? Это удалит все сохранённые настройки приложения.
             <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
               <Button variant="contained" color="error" size="small" onClick={handleReset}>
                 Да, сбросить всё
@@ -134,7 +147,7 @@ export default function SettingsPage() {
             color="error"
             onClick={() => setResetConfirm(true)}
           >
-            Сбросить все настройки и данные
+            Сбросить все настройки
           </Button>
         )}
         
@@ -142,6 +155,13 @@ export default function SettingsPage() {
           Версия приложения: 1.0.0
         </Typography>
       </Paper>
+      
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        message={snackbar.message}
+      />
     </Container>
   );
 }

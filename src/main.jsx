@@ -1,11 +1,9 @@
-import { StrictMode } from 'react'
+import { StrictMode, useState, useMemo } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-
-const savedTheme = localStorage.getItem('theme') || 'dark'
 
 const getDesignTokens = (mode) => ({
   palette: {
@@ -33,13 +31,28 @@ const getDesignTokens = (mode) => ({
   },
 })
 
-const theme = createTheme(getDesignTokens(savedTheme))
+function RootWithTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'dark'
+  const [mode, setMode] = useState(savedTheme)
+  
+  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode])
+
+  const toggleTheme = () => {
+    const newMode = mode === 'dark' ? 'light' : 'dark'
+    setMode(newMode)
+    localStorage.setItem('theme', newMode)
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App toggleTheme={toggleTheme} themeMode={mode} />
+    </ThemeProvider>
+  )
+}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <RootWithTheme />
   </StrictMode>
 )
